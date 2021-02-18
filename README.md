@@ -1,4 +1,8 @@
-# Below are the environment variable which need to be configure in OS system environment variable
+- java 1.8
+- springboot 2.2.4
+- mongodb
+
+## Below are the environment variable which need to be configure in OS system environment variable
 
 ## Database
 - host : DATABASE_HOST
