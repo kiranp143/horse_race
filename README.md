@@ -18,3 +18,10 @@ nohup java -jar race-0.0.1-SNAPSHOT.jar &
 
 ### command to stop jar
 sudo pkill -9 -f race-0.0.1-SNAPSHOT.jar
+
+### command to run docker compose 
+sudo docker-compose up 
+
+### command to run docker compose in background
+sudo docker-compose up -d
+
