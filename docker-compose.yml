@@ -1,6 +1,5 @@
 version: "3"
 services:
-
   race:
     image: kiranp143/horse_race_demo
     environment:
