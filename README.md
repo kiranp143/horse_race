@@ -5,9 +5,7 @@
 ## Below are the environment variable which need to be configure in OS system environment variable
 
 ## Database
-- host : DATABASE_HOST
-- name : DATABASE_NAME
-- port : DATABASE_PORT
+- host : DATABASE_URL
 
 ## api url 
 
