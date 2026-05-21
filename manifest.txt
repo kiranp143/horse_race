@@ -3,3 +3,135 @@ Manifest-Version: 1.0
 Created-By: Me
 
 Main-Class: race
+
+Develop a production-grade Spring Boot starter library called `secret-loader-spring-boot-starter` that dynamically loads secrets and injects them into the Spring Environment before application startup.
+
+Requirements:
+
+1. Technology Stack
+
+* Java 17
+* Spring Boot 3.x
+* Maven
+* Support Spring Boot auto-configuration
+
+2. Core Features
+
+* Load secrets before datasource initialization
+* Avoid hardcoded credentials in `application.yaml`
+* Do not rely on environment variables
+* Work in Docker, Kubernetes, CI/CD pipelines, and temporary containers
+* Inject secrets dynamically into Spring Environment
+* Reusable across multiple microservices
+
+3. Implementation Requirements
+
+* Use `EnvironmentPostProcessor`
+* Register processor using:
+
+  * `META-INF/spring.factories` (for compatibility)
+  * `META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports` (for Spring Boot 3 preferred approach)
+* Create modular architecture with:
+
+  * `SecretService` interface
+  * Multiple implementations:
+
+    * REST API secret loader
+    * File-based secret loader
+    * Vault-based loader placeholder
+* Add auto-configuration support
+* Add configuration properties support using:
+
+  * `@ConfigurationProperties`
+  * `@EnableConfigurationProperties`
+
+4. Configuration Example
+
+Library user should configure:
+
+```yaml
+secret:
+  loader:
+    enabled: true
+    source: api
+    api-url: https://secret-api.company.com/secrets
+    api-token: xyz123
+```
+
+5. Secret Injection Example
+
+Inject dynamically:
+
+```properties
+spring.datasource.url
+spring.datasource.username
+spring.datasource.password
+jwt.secret
+redis.password
+kafka.password
+```
+
+6. REST Secret Loader
+
+* Use `RestTemplate` or `WebClient`
+* Support Bearer Token authentication
+* Parse JSON response
+* Handle API failures gracefully
+* Add retry mechanism
+
+7. Security Features
+
+* Never log secrets
+* Mask sensitive values in logs
+* Support encrypted API response
+* Add optional AES decryption utility
+
+8. Production Features
+
+* Retry support
+* Timeout handling
+* Secret caching
+* Refresh capability
+* Thread-safe implementation
+* Fallback support
+* Proper exception handling
+* Structured logging
+
+9. Deliverables
+   Generate:
+
+* Complete Maven project structure
+* All Java classes
+* Configuration classes
+* Auto-configuration setup
+* Example consuming Spring Boot application
+* Sample API response
+* README documentation
+* Unit test examples
+* Integration test examples
+* Docker compatibility notes
+* Kubernetes compatibility notes
+
+10. Coding Standards
+
+* Follow SOLID principles
+* Clean architecture
+* Production-grade code quality
+* Proper package structure
+* Use constructor injection
+* Add JavaDocs
+* Add comments for critical sections
+
+11. Optional Advanced Features
+
+* Support AWS Secrets Manager
+* Support Azure Key Vault
+* Support HashiCorp Vault
+* Dynamic secret refresh without restart
+* Secret rotation support
+* Multi-tenant secret loading
+* Profile-based secret resolution
+
+12. Final Goal
+
+The consuming application should not contain real credentials in `application.yaml`. Secrets should be fetched securely during startup and injected automatically into Spring Boot configuration before beans initialize.
