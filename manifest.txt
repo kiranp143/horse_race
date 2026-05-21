@@ -135,3 +135,259 @@ kafka.password
 12. Final Goal
 
 The consuming application should not contain real credentials in `application.yaml`. Secrets should be fetched securely during startup and injected automatically into Spring Boot configuration before beans initialize.
+
+
+
+........................................................................................
+
+Build a production-grade Secret Vault platform similar to HashiCorp Vault using Spring Boot and modern cloud-native architecture.
+
+Goal:
+Create a secure centralized secret management system where applications can securely store and fetch secrets such as database credentials, JWT secrets, API keys, Redis passwords, Kafka credentials, SMTP credentials, and OAuth secrets.
+
+The platform should include:
+
+1. Secret Vault Server (Web Application)
+2. Spring Boot Secret Loader Library
+3. Admin Dashboard UI
+4. REST APIs
+5. Secure Authentication & Authorization
+6. Dynamic Secret Injection into Client Applications
+
+====================================================
+TECH STACK
+==========
+
+Backend:
+
+* Java 17
+* Spring Boot 3.x
+* Spring Security
+* Spring Data JPA
+* PostgreSQL or MySQL
+* Redis (optional)
+* Maven
+
+Frontend:
+
+* React + TailwindCSS
+  OR
+* Angular
+
+Infrastructure:
+
+* Docker
+* Kubernetes compatible
+* HTTPS support
+
+====================================================
+CORE REQUIREMENTS
+=================
+
+1. SECRET STORAGE
+
+* Store secrets securely in database
+* Never store plain text secrets
+* Encrypt all secrets before persistence
+* Support secret categories:
+
+  * database credentials
+  * JWT secrets
+  * API keys
+  * SMTP credentials
+  * OAuth credentials
+  * Redis passwords
+  * Kafka credentials
+
+2. ENCRYPTION
+
+* Implement AES-256 encryption
+* Create EncryptionUtil service
+* Master key should not be hardcoded
+* Support encrypted secret rotation
+* Mask sensitive values in logs
+
+3. AUTHENTICATION
+   Support:
+
+* JWT authentication
+* API Tokens
+* Client ID + Secret
+* Role-based access control (RBAC)
+
+4. AUTHORIZATION
+   Applications should only access their own secrets.
+
+Example:
+
+* order-service → only order-service secrets
+* payment-service → only payment-service secrets
+
+5. SECRET APIs
+
+Create APIs:
+
+POST /api/v1/secrets
+GET /api/v1/secrets/{application}
+PUT /api/v1/secrets/{id}
+DELETE /api/v1/secrets/{id}
+POST /api/v1/secrets/rotate
+GET /api/v1/secrets/history/{id}
+
+6. SECRET VERSIONING
+   Maintain version history of secrets.
+
+7. AUDIT LOGGING
+   Track:
+
+* who accessed secrets
+* when
+* source IP
+* application name
+* success/failure
+
+8. MULTI-ENVIRONMENT SUPPORT
+   Support:
+
+* dev
+* qa
+* staging
+* production
+
+Example:
+order-service/prod/db.password
+
+9. SECRET LOADER SPRING BOOT STARTER
+
+Build a reusable Spring Boot starter library that:
+
+* fetches secrets during startup
+* injects into Spring Environment
+* uses EnvironmentPostProcessor
+* loads secrets before datasource initialization
+* supports REST API integration
+* supports retry and timeout handling
+* supports caching
+* supports refresh without restart
+
+10. CLIENT APPLICATION FLOW
+
+Application starts
+↓
+Secret Loader Library runs
+↓
+Calls Vault REST API
+↓
+Fetches secrets securely
+↓
+Injects into Spring Environment
+↓
+Datasource initializes
+↓
+Application starts successfully
+
+11. ADMIN DASHBOARD FEATURES
+
+* Login page
+* Secret management UI
+* Create/update/delete secrets
+* Application management
+* Environment management
+* Audit logs dashboard
+* Secret rotation dashboard
+* User & role management
+
+12. DATABASE DESIGN
+
+Create database schema for:
+
+* users
+* roles
+* applications
+* secrets
+* secret_versions
+* audit_logs
+* api_tokens
+
+13. SECURITY FEATURES
+
+* HTTPS only
+* JWT token validation
+* API rate limiting
+* Token expiration
+* Secret masking
+* CSRF protection
+* Secure headers
+* Input validation
+
+14. ADVANCED FEATURES
+
+* Dynamic secret refresh
+* Secret rotation
+* Expiring secrets
+* Temporary credentials
+* Multi-tenant architecture
+* Kubernetes integration
+* Docker support
+* Horizontal scalability
+* Redis caching
+* Event-driven refresh using Kafka or RabbitMQ
+
+15. PRODUCTION REQUIREMENTS
+
+* Thread-safe implementation
+* SOLID principles
+* Clean architecture
+* Exception handling
+* Structured logging
+* Health checks
+* Metrics support
+* Monitoring ready
+* Scalable architecture
+
+16. PROJECT STRUCTURE
+
+Generate:
+
+* complete backend structure
+* frontend structure
+* Maven configuration
+* Dockerfiles
+* docker-compose setup
+* Kubernetes YAMLs
+* README
+* API documentation
+* Postman collection
+* Unit tests
+* Integration tests
+
+17. DELIVERABLES
+    Generate complete code for:
+
+* Secret Vault backend
+* Secret Loader starter library
+* React/Angular admin dashboard
+* Encryption module
+* Security module
+* REST APIs
+* Database schema
+* Docker deployment
+* Kubernetes deployment
+* CI/CD pipeline example
+
+18. FINAL GOAL
+
+The final system should work like this:
+
+Admin stores secrets securely in Vault
+↓
+Client applications authenticate with Vault
+↓
+Spring Boot secret-loader library fetches secrets dynamically
+↓
+Secrets injected into Spring Environment before beans initialize
+↓
+Applications run without hardcoded credentials or environment variables
+
+Generate enterprise-grade production-ready implementation with proper architecture, code quality, security best practices, scalability, and documentation.
+
